@@ -17,7 +17,8 @@ namespace TestTest
             do
             {
                 Console.WriteLine("what would you like to do?\n1. Search for Movie?\n" + 
-                                  "2. Add Movie\n3. Update Movie\n4. Delete Movie\n5. exit");
+                                  "2. Add Movie\n3. Update Movie\n4. Delete Movie\n5. Add New User?\n" + 
+                                  "6. Enter Rating On Movie?\n7. List Top Rated Movies?\n8. Undecided\n9. Exit");
                 choice = Convert.ToInt32(Console.ReadLine());
                 
                 if (choice == 1)
@@ -102,6 +103,117 @@ namespace TestTest
                     catch (Exception e)
                     {
                         Console.WriteLine($"failed to delete movie {e}");
+                        throw;
+                    }
+                }else if (choice == 5)
+                {
+                    try
+                    {
+                        // add new user
+                        Console.Write("enter your age> ");
+                        long nAge = Convert.ToInt32(Console.ReadLine());
+
+                        Console.Write("enter your gender (M/F)> ");
+                        var nGender = Console.ReadLine();
+
+                        Console.Write("enter your zipcode> ");
+                        string nZipCode = Console.ReadLine();
+
+                        using (var db = new MovieContext())
+                        {
+                            foreach (var occupation in db.Occupations)
+                            {
+                                Console.WriteLine($"Occupation: {occupation.Name}");
+                            }
+                        }
+                        
+                        Console.Write("enter your occupation> ");
+                        var nOccupation = Console.ReadLine();
+                        Occupation temp = null;
+
+                        using (var db = new MovieContext())
+                        {
+                            temp = db.Occupations.FirstOrDefault(x => x.Name.ToLower().Contains(nOccupation.ToLower()));
+                        }
+                        var user = new User()
+                        {
+                            Age = nAge,
+                            Gender = nGender,
+                            ZipCode = nZipCode,
+                            Occupation = temp
+                        };
+
+                        using (var db = new MovieContext())
+                        {
+                            db.Users.Update(user);
+                            db.SaveChanges();
+                        }
+
+                        Console.WriteLine($"Age: {nAge} Gender: {nGender} Zipcode: {nZipCode} Occupation: {nOccupation}\nhas been added");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }else if (choice == 6)
+                {
+                    try
+                    {
+                        // enter rating
+                        Console.Write("enter the name of the movie you want to rate> ");
+                        var selectedMovie = Console.ReadLine()?.ToLower();
+
+                        Console.Write("enter the rating (1-5)> ");
+                        long rating = Convert.ToInt64(Console.ReadLine());
+
+                        using (var db = new MovieContext())
+                        {
+                            var user = db.Users.FirstOrDefault();
+                            var movie = db.Movies.FirstOrDefault(x => selectedMovie != null && x.Title.Contains(selectedMovie));
+
+                            var userMovie = new UserMovie()
+                            {
+                                Rating = rating,
+                                RatedAt = DateTime.Now
+                            };
+
+                            if (user != null) userMovie.User = user;
+                            if (movie != null) userMovie.Movie = movie;
+
+                            db.UserMovies.Add(userMovie);
+                            db.SaveChanges();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"failed to enter rating {e}");
+                        throw;
+                    }
+                }else if (choice == 7)
+                {
+                    try
+                    {
+                        // list top movies by age bracket or occupation
+                        Console.WriteLine("here are the top movies by occupation:");
+                        
+                        List<DataModels.Movie> movies = new List<DataModels.Movie>();
+
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"failed to list top rated movies {e}");
+                        throw;
+                    }
+                }else if (choice == 8)
+                {
+                    try
+                    {
+                        // undecided
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
                         throw;
                     }
                 }
