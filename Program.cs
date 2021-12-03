@@ -114,7 +114,7 @@ namespace TestTest
                         long nAge = Convert.ToInt32(Console.ReadLine());
 
                         Console.Write("enter your gender (M/F)> ");
-                        var nGender = Console.ReadLine();
+                        var nGender = Console.ReadLine().ToUpper();
 
                         Console.Write("enter your zipcode> ");
                         string nZipCode = Console.ReadLine();
@@ -170,7 +170,7 @@ namespace TestTest
                         using (var db = new MovieContext())
                         {
                             var user = db.Users.FirstOrDefault();
-                            var movie = db.Movies.FirstOrDefault(x => selectedMovie != null && x.Title.Contains(selectedMovie));
+                            var movie = db.Movies.FirstOrDefault(x => selectedMovie != null && x.Title.ToLower().Contains(selectedMovie));
 
                             var userMovie = new UserMovie()
                             {
@@ -180,6 +180,8 @@ namespace TestTest
 
                             if (user != null) userMovie.User = user;
                             if (movie != null) userMovie.Movie = movie;
+
+                            Console.WriteLine($"User: {user.Id} updated movie: {movie} rating given: {rating}");
 
                             db.UserMovies.Add(userMovie);
                             db.SaveChanges();
@@ -196,8 +198,21 @@ namespace TestTest
                     {
                         // list top movies by age bracket or occupation
                         Console.WriteLine("here are the top movies by occupation:");
-                        
-                        List<DataModels.Movie> movies = new List<DataModels.Movie>();
+
+                        List<DataModels.Occupation> occupations;
+                        using (var db = new MovieContext())
+                        {
+                            // I got stuck on this part and I asked justin for a bit of help. He walked me how to go through it. 
+                            var upw = db.UserMovies.Include(r => r.Movie).Include(r=> r.User).Where(c=> c.Rating.Equals(5));
+                            occupations = db.Occupations.ToList();
+
+                            foreach (var jls in occupations)
+                            {
+                                var temp = upw.FirstOrDefault(x=> x.User.Occupation == jls);
+                                Console.WriteLine($"{temp?.Movie.Title} {temp?.Rating} {jls?.Name}");
+                            }
+
+                        }
 
                     }
                     catch (Exception e)
@@ -210,6 +225,7 @@ namespace TestTest
                     try
                     {
                         // undecided
+                        
                     }
                     catch (Exception e)
                     {
@@ -217,7 +233,7 @@ namespace TestTest
                         throw;
                     }
                 }
-            } while (choice != 5);
+            } while (choice != 9);
         }
     }
 }
