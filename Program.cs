@@ -54,6 +54,7 @@ namespace TestTest
                                     {
                                         Console.WriteLine($"ID: {movie.Id} Movie: {movie.Title}");
                                     }
+                                    
                                 }
                                 
                                 break;
