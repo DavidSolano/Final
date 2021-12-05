@@ -14,7 +14,7 @@ namespace TestTest
         public static void Main(string[] args)
         {
             int choice;
-            
+            var logger = NLog.LogManager.GetCurrentClassLogger();
 
             do
             {
@@ -60,11 +60,12 @@ namespace TestTest
                                 
                                 break;
                         }
+                        logger.Info("displayed movies");
                         
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"failed to display movies {e}");
+                        logger.Error(e, "failed to display movies");
                         throw;
                     }
                 }else if (choice == 2)
@@ -83,10 +84,11 @@ namespace TestTest
                             db.Add(mov);
                             db.SaveChanges();
                         }
+                        logger.Info("added new movies");
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"failed to add movie {e}");
+                        logger.Error(e, "failed to add movies");
                         throw;
                     }
                 }else if (choice == 3)
@@ -108,11 +110,12 @@ namespace TestTest
 
                             db.Movies.Update(updatedMovie);
                             db.SaveChanges();
+                            logger.Info("updated specified movie");
                         }
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"failed to update movie {e}");
+                        logger.Error(e, "failed to update movies");
                         throw;
                     }
                 }else if (choice == 4)
@@ -129,11 +132,12 @@ namespace TestTest
 
                             db.Movies.Remove(deleteMovie);
                             db.SaveChanges();
+                            logger.Info("deleted specified movie");
                         }
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"failed to delete movie {e}");
+                        logger.Error(e, "failed to delete movies");
                         throw;
                     }
                 }else if (choice == 5)
@@ -181,10 +185,12 @@ namespace TestTest
                         }
 
                         Console.WriteLine($"Age: {nAge} Gender: {nGender} Zipcode: {nZipCode} Occupation: {nOccupation}\nhas been added");
+                        logger.Info("added new user");
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
+                        logger.Error(e, "failed to add new user");
                         throw;
                     }
                 }else if (choice == 6)
@@ -216,11 +222,12 @@ namespace TestTest
 
                             db.UserMovies.Add(userMovie);
                             db.SaveChanges();
+                            logger.Info("entered rating");
                         }
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"failed to enter rating {e}");
+                        logger.Error(e, "failed to enter rating");
                         throw;
                     }
                 }else if (choice == 7)
@@ -242,13 +249,12 @@ namespace TestTest
                                 var temp = upw.FirstOrDefault(x=> x.User.Occupation == jls);
                                 Console.WriteLine($"{temp?.Movie.Title} {temp?.Rating} {jls?.Name}");
                             }
-
                         }
-
+                        logger.Info("listed sorted movies by occupation");
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"failed to list top rated movies {e}");
+                        logger.Error(e, "failed to display top rated movies");
                         throw;
                     }
                 }else if (choice == 8)
@@ -260,11 +266,12 @@ namespace TestTest
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
+                        logger.Error(e, "failed to");
                         throw;
                     }
                 }
             } while (choice != 9);
+            NLog.LogManager.Shutdown();
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZuJHksJC4ENQezQAH+Xjwb28w3IKoY2vjuVpMO3sZmzLDTQdkFTI4boKi/NlnA/k7ZyJ65ATEq554LsdeUz5ew==",
+  "dgSpecHash": "nT4H1k/nkhz30eCR2HU2K2Oo4w7meqU2V27o201kqSsqZVZBozlwlbHljvjDwc8jgrnlLO+IzONo2S6m969vFA==",
   "success": true,
   "projectFilePath": "C:\\Users\\School Account\\source\\repos\\TestTest\\TestTest.csproj",
   "expectedPackageFiles": [
@@ -38,6 +38,7 @@
     "C:\\Users\\School Account\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\School Account\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\School Account\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\School Account\\.nuget\\packages\\nlog\\4.7.12\\nlog.4.7.12.nupkg.sha512",
     "C:\\Users\\School Account\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\School Account\\.nuget\\packages\\system.configuration.configurationmanager\\4.7.0\\system.configuration.configurationmanager.4.7.0.nupkg.sha512",
     "C:\\Users\\School Account\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
