@@ -25,11 +25,40 @@ namespace TestTest
                 {
                     try
                     {
-                        using var db = new MovieContext();
-                        foreach (var movies in db.Movies)
+                        int option;
+                        Console.Write("1. for all movies\n2. Enter a specific amount\n> ");
+                        option = Convert.ToInt32(Console.ReadLine());
+
+                        switch (option)
                         {
-                            Console.WriteLine($"ID: {movies.Id} Movie: {movies.Title}");
+                            case 1:
+                            {
+                                using var db = new MovieContext();
+                                foreach (var movies in db.Movies)
+                                {
+                                    Console.WriteLine($"ID: {movies.Id} Movie: {movies.Title}");
+                                }
+
+                                break;
+                            }
+                            case 2:
+                                int amount;
+                                Console.Write("how many movies would you like to see> ");
+                                amount = Convert.ToInt32(Console.ReadLine());
+
+                                using (var db = new MovieContext())
+                                {
+                                    var movs = db.Movies.Take(amount).ToList();
+
+                                    foreach (var movie in movs)
+                                    {
+                                        Console.WriteLine($"ID: {movie.Id} Movie: {movie.Title}");
+                                    }
+                                }
+                                
+                                break;
                         }
+                        
                     }
                     catch (Exception e)
                     {
