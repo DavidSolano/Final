@@ -272,6 +272,7 @@ namespace TestTest
                 }
             } while (choice != 9);
             NLog.LogManager.Shutdown();
+            
         }
     }
 }
