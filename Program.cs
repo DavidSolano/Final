@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Extensions.Logging.Abstractions;
 using TestTest.Context;
 using TestTest.DataModels;
 
@@ -13,6 +14,7 @@ namespace TestTest
         public static void Main(string[] args)
         {
             int choice;
+            
 
             do
             {
