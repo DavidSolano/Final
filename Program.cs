@@ -261,8 +261,27 @@ namespace TestTest
                 {
                     try
                     {
-                        // undecided
+                        //show movies based on random genre picked from the total genre count
+                        Console.WriteLine("here are the top movies by occupation:");
+
+                        List<DataModels.Occupation> occupations;
+
+                        using (var db = new MovieContext())
+                        {
+                            occupations = db.Occupations.ToList();
+                        }
+
+                        var random = new Random();
+                        var randomOccupation = occupations[random.Next(0, occupations.Count)];
+
+                        using (var db = new MovieContext())
+                        {
+                            var upw = db.UserMovies.Include(r => r.Movie).Include(r => r.User).Where(c => c.Rating.Equals(5));
+                            var temp = upw.FirstOrDefault(x => x.User.Occupation == randomOccupation);
+                            Console.WriteLine($"{temp?.Movie.Title} {temp?.Rating} {randomOccupation?.Name}");
+                        }
                         
+                        logger.Info("listed sorted movies by genre");
                     }
                     catch (Exception e)
                     {
