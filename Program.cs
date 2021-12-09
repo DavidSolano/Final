@@ -18,6 +18,7 @@ namespace TestTest
 
             do
             {
+                //menu
                 Console.WriteLine("what would you like to do?\n1. Search for Movie?\n" + 
                                   "2. Add Movie\n3. Update Movie\n4. Delete Movie\n5. Add New User?\n" + 
                                   "6. Enter Rating On Movie?\n7. List Top Rated Movies?\n8. Random movie based on occupation\n9. Exit");
@@ -31,17 +32,19 @@ namespace TestTest
                         Console.Write("1. for all movies\n2. Enter a specific amount\n3. Search for a specific movie\n> ");
                         option = Convert.ToInt32(Console.ReadLine());
 
-                        // if user doesn't enter a number, keep asking
+                        // keeps asking for option
                         while (option < 1 || option > 3)
                         {
                             Console.Write("Please enter a valid option\n> ");
                             option = Convert.ToInt32(Console.ReadLine());
                         }
 
+                        // switch for options 1-3
                         switch (option)
                         {
                             case 1:
                             {
+                                // displays all movies 
                                 using var db = new MovieContext();
                                 foreach (var movies in db.Movies)
                                 {
@@ -51,6 +54,7 @@ namespace TestTest
                                 break;
                             }
                             case 2:
+                                //displays a specific amount of movies
                                 int amount;
                                 Console.Write("how many movies would you like to see> ");
                                 amount = Convert.ToInt32(Console.ReadLine());
@@ -67,17 +71,18 @@ namespace TestTest
                                 
                                 break;
                             case 3:
-                                // let user search for a movie
+                                // lets user search for a movie
                                 Console.Write("Enter the movie you would like to search for> ");
                                 var search = Console.ReadLine();
                                 
-                                // if user doesn't enter a movie, keep asking
+                                // keeps asking for valid input
                                 while (search == "")
                                 {
                                     Console.Write("Please enter a valid movie> ");
                                     search = Console.ReadLine();
                                 }
                                 
+                                // search functionality
                                 using (var db = new MovieContext())
                                 {
                                     var movs = db.Movies.Where(m => search != null && m.Title.ToLower().Contains(search.ToLower())).ToList();
@@ -90,9 +95,7 @@ namespace TestTest
 
                                 break;
                         }
-
                         logger.Info("displayed movies");
-                        
                     }
                     catch (Exception e)
                     {
@@ -103,18 +106,18 @@ namespace TestTest
                 {
                     try
                     {
+                        // adds a movie
                         Console.Write("enter movie title> ");
                         var movieName = Console.ReadLine();
 
-                        // if user doesn't enter a movie name, keep asking
+                        // keeps asking for valid input
                         while (movieName == "")
                         {
                             Console.Write("Please enter a valid movie name\n> ");
                             movieName = Console.ReadLine();
                         }
-
                         
-                        // create new movie
+                        // creates a new movie
                         var mov = new Movie();
                         mov.Title = movieName;
                     
@@ -134,19 +137,26 @@ namespace TestTest
                 {
                     try
                     {
+                        // updates movies
                         Console.Write("enter movie title you want to update: ");
                         var selectedMovie = Console.ReadLine();
 
-                        // if movie doesn't exist, keep asking
+                        // keeps asking for valid input
                         while (selectedMovie == "")
                         {
                             Console.Write("Please enter a valid movie name\n> ");
                             selectedMovie = Console.ReadLine();
                         }
-
-
+                        
                         Console.Write("enter updated movie: ");
                         var movieUpdate = Console.ReadLine();
+                        
+                        // keeps asking for valid input
+                        while (movieUpdate == "")
+                        {
+                            Console.Write("Please enter a valid movie name\n> ");
+                            movieUpdate = Console.ReadLine();
+                        }
 
                         using (var db = new MovieContext())
                         {
@@ -169,10 +179,11 @@ namespace TestTest
                 {
                     try
                     {
+                        // deletes movies
                         Console.Write("enter movie to delete: ");
                         var occ4 = Console.ReadLine();
 
-                        // if movie doesn't exist, keep asking
+                        // keeps asking for valid input
                         while (occ4 == "")
                         {
                             Console.Write("Please enter a valid movie name\n> ");
@@ -198,39 +209,37 @@ namespace TestTest
                 {
                     try
                     {
-                        // add new user
+                        // adds new user
                         Console.Write("enter your age> ");
                         long nAge = Convert.ToInt32(Console.ReadLine());
 
-                        // if user doesn't enter a number, keep asking
+                        // keeps asking for valid input
                         while (nAge < 0)
                         {
                             Console.Write("Please enter a valid age\n> ");
                             nAge = Convert.ToInt32(Console.ReadLine());
                         }
-
-
+                        
                         Console.Write("enter your gender (M/F)> ");
                         var nGender = Console.ReadLine().ToUpper();
 
+                        // keeps asking for valid input
                         while (nGender == "")
                         {
                             System.Console.WriteLine("Please enter a valid character\n>");
                             nGender = Console.ReadLine().ToUpper();
                         }
-
-
+                        
                         Console.Write("enter your zipcode> ");
                         string nZipCode = Console.ReadLine();
 
-                        // if user doesn't enter a zipcode, keep asking
+                        // keeps asking for valid input
                         while (nZipCode == "")
                         {
                             Console.Write("Please enter a valid zipcode\n> ");
                             nZipCode = Console.ReadLine();
                         }
-
-
+                        
                         using (var db = new MovieContext())
                         {
                             foreach (var occupation in db.Occupations)
@@ -242,7 +251,7 @@ namespace TestTest
                         Console.Write("enter your occupation> ");
                         var nOccupation = Console.ReadLine();
 
-                        // if occupation does not exist, keep asking
+                        // keeps asking for valid input
                         while (nOccupation == "")
                         {
                             Console.Write("Please enter a valid occupation\n> ");
@@ -282,11 +291,11 @@ namespace TestTest
                 {
                     try
                     {
-                        // enter rating
+                        // enter ratings on new movies
                         Console.Write("enter the name of the movie you want to rate> ");
                         var selectedMovie = Console.ReadLine()?.ToLower();
 
-                        // if movie doesn't exist, keep asking
+                        // keeps asking for valid input
                         while (selectedMovie == "")
                         {
                             Console.Write("Please enter a valid movie name\n> ");
@@ -296,14 +305,13 @@ namespace TestTest
                         Console.Write("enter the rating (1-5)> ");
                         long rating = Convert.ToInt64(Console.ReadLine());
 
-                        // if user doesn't enter a rating, keep asking
+                        // keeps asking for valid input
                         while (rating < 1 || rating > 5)
                         {
                             Console.Write("Please enter a valid rating\n> ");
                             rating = Convert.ToInt64(Console.ReadLine());
                         }
-
-
+                        
                         using (var db = new MovieContext())
                         {
                             var user = db.Users.FirstOrDefault();
@@ -318,6 +326,7 @@ namespace TestTest
                             if (user != null) userMovie.User = user;
                             if (movie != null) userMovie.Movie = movie;
 
+                            // displays the movie that was rated
                             Console.WriteLine($"User: {user.Id} updated movie: {movie} rating given: {rating}");
 
                             db.UserMovies.Add(userMovie);
@@ -334,7 +343,7 @@ namespace TestTest
                 {
                     try
                     {
-                        // list top movies by age bracket or occupation
+                        // list top movies by occupation
                         Console.WriteLine("here are the top movies by occupation:");
 
                         List<DataModels.Occupation> occupations;
@@ -371,6 +380,7 @@ namespace TestTest
                             occupations = db.Occupations.ToList();
                         }
 
+                        // random number generator for genre selection
                         var random = new Random();
                         var randomOccupation = occupations[random.Next(0, occupations.Count)];
 
