@@ -327,7 +327,7 @@ namespace TestTest
                             if (movie != null) userMovie.Movie = movie;
 
                             // displays the movie that was rated
-                            Console.WriteLine($"User: {user.Id} updated movie: {movie} rating given: {rating}");
+                            Console.WriteLine($"User: {user.Id} updated movie: {selectedMovie} rating given: {rating}");
 
                             db.UserMovies.Add(userMovie);
                             db.SaveChanges();
@@ -370,7 +370,7 @@ namespace TestTest
                 {
                     try
                     {
-                        //show movies based on random genre picked from the total genre count
+                        //show movie based on random genre picked from the total genre count
                         Console.WriteLine("here are the top movies by occupation:");
 
                         List<DataModels.Occupation> occupations;
